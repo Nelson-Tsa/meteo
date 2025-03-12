@@ -97,7 +97,8 @@ async function updateForecastInfo(city) {
 
     forecastItemsContainer.innerHTML = '';
     forecastData.list.forEach(forecastWeather => {
-        if (forecastWeather.dt_txt.includes(timeTaken) && !forecastWeather.dt_txt.includes(todayDate)) {
+        const forecastDate = new Date(forecastWeather.dt_txt).toISOString().split('T')[0];
+        if (forecastWeather.dt_txt.includes(timeTaken) && forecastDate > todayDate) {
             updateForecastItem(forecastWeather);
         }
         // console.log(forecastData); 
@@ -106,6 +107,7 @@ async function updateForecastInfo(city) {
 }
 
 function updateForecastItem(weatherData) {
+    console.log("Prévision affichée pour :", weatherData.dt_txt)
 const {
     dt_txt : date,
     weather : [{id}],
